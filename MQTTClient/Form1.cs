@@ -100,6 +100,12 @@ namespace MQTTClient
             //});
         }
 
+        /// <summary>
+        /// MQTT协议参数解释
+        /// https://docs.emqx.cn/broker/v4.3/development/protocol.html#mqtt%E5%8D%8F%E8%AE%AE
+        /// </summary>
+        /// <param name="username"></param>
+        /// <param name="password"></param>
         public async void ClientStart(string username = "test-host:admin-test", string password = "test")
         {
             try
@@ -147,7 +153,11 @@ namespace MQTTClient
                     };
                 }
 
+                // 设置为false，表示创建一个持久会话，在客户端断开连接时，会话仍然保持并保存离线消息，直到会话超时注销。
+                // 设置为true，表示创建一个新的临时会话，在客户端断开时，会话自动销毁。
                 options.CleanSession = true;
+
+                // 连接保活心跳
                 options.KeepAlivePeriod = TimeSpan.FromSeconds(10);
 
                 mqttClient = mqttFactory.CreateMqttClient() as MqttClient;
