@@ -30,7 +30,10 @@ namespace MQTTClient
 
         private void btnConnect_Click(object sender, EventArgs e)
         {
-            ClientStart();
+            var username = this.txtUserName.Text;
+            var password = this.txtPassword.Text;
+
+            ClientStart(username, password);
             //return;
 
             //Task.Run(() =>
@@ -97,18 +100,18 @@ namespace MQTTClient
             //});
         }
 
-        public async void ClientStart()
+        public async void ClientStart(string username = "test-host:admin-test", string password = "test")
         {
             try
             {
                 var tcpServer = string.IsNullOrWhiteSpace(this.txtIP.Text?.Trim()) ? "127.0.0.1" : this.txtIP.Text.Trim();
                 var tcpPort = 1883;
-                var mqttUser = "mqtt-test";
-                var mqttPassword = "mqtt-test";
+                var mqttUser = username;
+                var mqttPassword = password;
                 var clientId = "lsp" + Guid.NewGuid();
 
-                mqttUser = "test-host:admin-test";
-                mqttPassword = "test";
+                //mqttUser = "test-host:admin-test";
+                //mqttPassword = "test";
 
                 var mqttFactory = new MqttFactory();
 
